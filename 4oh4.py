@@ -3,14 +3,14 @@ import os
 
 app = Flask(__name__)
 
-@app.errorhandler(404)
-def handle_all_things(e):
-    return '404 not found!', 404
-
-
 @app.route('/')
 def hello_world():
-    abort(404)
+    return '404 not found!'
+
+@app.after_request
+def everything_not_found(response):
+    response.status_code = 404
+    return response
 
 
 if __name__ == '__main__':
